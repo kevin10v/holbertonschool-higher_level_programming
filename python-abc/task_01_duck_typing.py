@@ -1,58 +1,52 @@
 #!/usr/bin/env python3
-"""Abstract class Shape and its implementations: Circle and Rectangle."""
-
 from abc import ABC, abstractmethod
 import math
+"""abstract method introduction"""
 
 
 class Shape(ABC):
-    """Abstract base class for geometric shapes."""
-
-    @abstractmethod
+    """abstract class for shapes"""
     def area(self):
-        """Return the area of the shape."""
+        """defines area"""
         pass
 
-    @abstractmethod
     def perimeter(self):
-        """Return the perimeter of the shape."""
+        """deifnes perimeter"""
         pass
 
 
 class Circle(Shape):
-    """Circle shape."""
-
+    """"defines circle shape"""
     def __init__(self, radius):
-        """Initialize a circle with radius."""
+        """initializes a circle"""
         self.radius = radius
 
     def area(self):
-        """Return the area of the circle."""
-        return math.pi * self.radius ** 2
+        """"defines circle area"""
+        return math.pi * self.radius * self.radius
 
     def perimeter(self):
-        """Return the circumference of the circle."""
-        return 2 * math.pi * self.radius
+        """defines circle perimeter"""
+        return 2 * math.pi * abs(self.radius)
 
 
 class Rectangle(Shape):
-    """Rectangle shape."""
-
+    """defines rectangle shape"""
     def __init__(self, width, height):
-        """Initialize a rectangle with width and height."""
+        """"initializes a rectanlge"""
         self.width = width
         self.height = height
 
     def area(self):
-        """Return the area of the rectangle."""
+        """defines rectangle area"""
         return self.width * self.height
 
     def perimeter(self):
-        """Return the perimeter of the rectangle."""
+        """defines rectangle perimeter"""
         return 2 * (self.width + self.height)
 
 
-def shape_info(shape):
-    """Print the area and perimeter of a given shape."""
-    print(f"Area: {shape.area()}")
-    print(f"Perimeter: {shape.perimeter()}")
+def shape_info(shape_example):
+    """gives shape info"""
+    print(f"Area: {shape_example.area()}")
+    print(f"Perimeter: {shape_example.perimeter()}")

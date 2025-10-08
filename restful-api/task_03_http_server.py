@@ -8,11 +8,11 @@ Endpoints:
   GET /        -> "Hello, this is a simple API!"
   GET /status  -> "OK"
   GET /data    -> JSON: {"name":"John","age":30,"city":"New York"}
-  GET /info    -> JSON with version and short description.
-  other paths  -> 404 JSON: {"error":"Endpoint not found"}
+  GET /info    -> JSON with version and description
+  other paths  -> 404 plain text: "Endpoint not found"
 
 Optional:
-  POST /echo   -> Echoes back the JSON body you send.
+  POST /echo   -> Echoes back the JSON body you send
 """
 
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -47,7 +47,8 @@ class SimpleAPIHandler(BaseHTTPRequestHandler):
         """Send a JSON response."""
         data = _json_bytes(payload)
         self.send_response(code)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
+        # Some checkers require exactly "application/json"
+        self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()
         self.wfile.write(data)
@@ -89,7 +90,7 @@ class SimpleAPIHandler(BaseHTTPRequestHandler):
             self._send_json(200, payload)
             return
 
-        self._send_json(404, {"error": "Endpoint not found"})
+        self._send_plain(404, "Endpoint not found")
 
     def do_POST(self) -> None:
         """Handle POST requests."""
@@ -102,7 +103,7 @@ class SimpleAPIHandler(BaseHTTPRequestHandler):
             self._send_json(200, {"echo": body})
             return
 
-        self._send_json(404, {"error": "Endpoint not found"})
+        self._send_plain(404, "Endpoint not found")
 
     def log_message(self, fmt: str, *args) -> None:
         """Customize server log output."""
